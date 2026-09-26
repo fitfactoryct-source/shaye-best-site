@@ -15,11 +15,11 @@ export function forgeReveal(svg, reduced) {
   gsap.timeline({ delay: .35 })
     .to(hot, { '--sweep': '140%', duration: 2.2, ease: 'power2.inOut' })
     .to(hot, { '--glow': 1, duration: .6 }, '-=.4')
-    .to(hot, { '--glow': .55, duration: 2.4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    .to(hot, { '--glow': .55, duration: 4.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
   // Cool back down as the hero leaves.
   gsap.to([svg, hot], {
     opacity: .35, ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
   });
 }

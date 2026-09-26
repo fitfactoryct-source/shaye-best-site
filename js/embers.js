@@ -3,8 +3,8 @@
 // ambient density), `judging` is the Judging section's burst-only field
 // (dead particles are pruned, not recycled, so it sits empty between bursts
 // instead of permanently densifying — see Task 7 fix-round finding).
-const hero = { ctx: null, parts: [], w: 0, h: 0, seed: null };
-const judging = { ctx: null, parts: [], w: 0, h: 0, seed: null };
+const hero = { ctx: null, parts: [], w: 0, h: 0, seed: null, pointer: null };
+const judging = { ctx: null, parts: [], w: 0, h: 0, seed: null, pointer: null };
 
 const draw = (ctx, p) => {
   ctx.beginPath();
@@ -15,12 +15,21 @@ const draw = (ctx, p) => {
 
 // One physics step. `ambient` particles recycle on death (hero); non-ambient
 // particles are pruned out of the array on death (judging burst pool).
-// Exported (as `_tick`) for the DOM-less unit tests only.
+// Ambient particles within REACH of state.pointer get a push away that decays
+// per frame (px/py), on top of their own drift. Exported (as `_tick`) for the
+// DOM-less unit tests only.
+const REACH = 120, PUSH = .12, DECAY = .9;
 function tick(state, ambient) {
   if (ambient) {
+    const P = state.pointer;
     for (const p of state.parts) {
-      p.x += p.vx; p.y += p.vy; p.a -= .0016;
-      if (p.a <= 0 || p.y < -20) Object.assign(p, state.seed());
+      if (P) {
+        const dx = p.x - P.x, dy = p.y - P.y, d = Math.hypot(dx, dy);
+        if (d > 0 && d < REACH) { const f = (1 - d / REACH) * PUSH; p.px = (p.px || 0) + dx / d * f; p.py = (p.py || 0) + dy / d * f; }
+      }
+      p.px = (p.px || 0) * DECAY; p.py = (p.py || 0) * DECAY;
+      p.x += p.vx + p.px; p.y += p.vy + p.py; p.a -= .0016;
+      if (p.a <= 0 || p.y < -20) Object.assign(p, state.seed(), { px: 0, py: 0 });
     }
   } else {
     state.parts = state.parts.filter(p => {
@@ -66,6 +75,14 @@ function start(canvas, state, ambient) {
   };
 
   resize();
+  if (ambient && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const host = canvas.parentElement;           // the hero section; the canvas itself is pointer-events:none
+    host.addEventListener('pointermove', e => {
+      const r = canvas.getBoundingClientRect();
+      state.pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+    }, { passive: true });
+    host.addEventListener('pointerleave', () => { state.pointer = null; });
+  }
   addEventListener('resize', resize);
   requestAnimationFrame(frame);
 }

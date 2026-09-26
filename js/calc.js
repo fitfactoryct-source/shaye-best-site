@@ -1,23 +1,17 @@
-// Official Shaye Best Classic ratio. Each band is "up to AND INCLUDING" its height.
-const BANDS = [
-  [168, 2,  'Up to and including 168 cm — plus 2 kg'],
-  [171, 4,  'Up to and including 171 cm — plus 4 kg'],
-  [173, 7,  'Up to and including 173 cm — plus 7 kg'],
-  [180, 10, 'Up to and including 180 cm — plus 10 kg'],
-  [188, 12, 'Over 180 up to and including 188 cm — plus 12 kg'],
-  [196, 14, 'Over 188 up to and including 196 cm — plus 14 kg'],
-  [Infinity, 15, 'Over 196 cm — plus 15 kg']
-];
-
+// Classic Physique height-to-weight. `table` rows are "up to and including
+// upTo cm" and carry either `plus` (max = h - 100 + plus) or `maxKg` (fixed).
 const inRange = h => Number.isFinite(h) && h >= 140 && h <= 220;
-const pick = h => BANDS.find(([max]) => h <= max);
+const pick = (h, table) => table.find(r => h <= r.upTo);
 
-export function maxWeight(heightCm) {
+export function maxWeight(heightCm, table) {
   if (!inRange(heightCm)) return null;
-  return (heightCm - 100) + pick(heightCm)[1];
+  const r = pick(heightCm, table);
+  if (!r) return null;
+  return r.maxKg ?? (heightCm - 100) + r.plus;
 }
 
-export function band(heightCm) {
+export function band(heightCm, table) {
   if (!inRange(heightCm)) return '';
-  return pick(heightCm)[2];
+  const r = pick(heightCm, table);
+  return r ? r.label : '';
 }
