@@ -1,4 +1,4 @@
-import { TBC } from './tbc.js';
+import { TBC, isTbc } from './tbc.js';
 
 // PREVIEW: local build shows unconfirmed sponsors dimmed with a label.
 // Set false at launch to hide anything still unconfirmed.
@@ -39,7 +39,7 @@ export const OVERALLS = [
   { key: 'mens-physique', title: "Men’s Physique",     amount: 30000, throne: 3,
     feeds: 'All Men’s Physique line-up winners' },
   { key: 'ladies-bb',     title: 'Ladies Bodybuilding', amount: 30000, throne: 1,
-    feeds: 'Ladies Figure Open and Ladies Bodybuilding Open winners' },
+    feeds: 'Ladies Figure Open, Ladies Figure 40+ and Ladies Bodybuilding Open winners' },
   { key: 'ladies-bikini', title: 'Ladies Bikini',      amount: 30000, throne: 4,
     feeds: 'Bikini, Fitness Bikini, Ladies Masters and Ladies Wellness winners' },
   { key: 'classic',       title: 'Classic Physique',   amount: 35000, rises: true, throne: 2,
@@ -48,19 +48,21 @@ export const OVERALLS = [
 
 // Ledges on the climb, base → summit. Whole list TBC until Shaye confirms 2027 divisions.
 export const DIVISION_GROUPS = TBC([
-  { name: 'Bikini & Wellness', lineups: [
-    'Ladies Bikini U21', 'Ladies Bikini 40+', 'Ladies Bikini up to 171 cm', 'Ladies Bikini over 171 cm',
-    'Ladies Fitness Bikini up to 171 cm', 'Ladies Fitness Bikini over 171 cm',
-    'Ladies Wellness Open', 'Ladies Sports Model Open' ] },
-  { name: "Men’s Physique", lineups: [
-    "Junior Men’s Physique U21", "Men’s Physique Masters 40+",
-    "Men’s Physique up to 175 cm", "Men’s Physique over 175 cm", 'Mr. Denim Open' ] },
-  { name: 'Ladies Bodybuilding & Figure', lineups: [ 'Ladies Figure Open', 'Ladies Bodybuilding Open' ] },
-  { name: "Men’s Bodybuilding", lineups: [
-    'Junior Bodybuilding U21', 'Bodybuilding over 50', 'Bodybuilding over 40',
-    'Bodybuilding under 70 kg', 'Bodybuilding under 80 kg', 'Bodybuilding under 90 kg', 'Bodybuilding over 90 kg' ] },
-  { name: 'Classic Physique', note: 'New for 2027 · three height classes',
-    lineups: [ 'Short', 'Medium', 'Tall' ] }
+  // Men together, then ladies together (Troy, 2026-09-29); the climb section draws a heading per side.
+  { overall: 'mens-bb', side: 'men', name: "Men’s Bodybuilding", lineups: [
+    'Junior Bodybuilding 21 and under', 'Bodybuilding over 50', 'Bodybuilding over 40',
+    'Bodybuilding under 70 kg', 'Bodybuilding under 80 kg', 'Bodybuilding under 90 kg', 'Bodybuilding over 90 kg' ] },
+  { overall: 'classic', side: 'men', name: 'Classic Physique', note: 'New for 2027 · three height classes',
+    lineups: [ 'Short', 'Medium', 'Tall' ] },
+  { overall: 'mens-physique', side: 'men', name: "Men’s Physique", lineups: [
+    "Junior Men’s Physique 21 and under", "Men’s Physique Masters 40+",
+    "Men’s Physique up to 175 cm", "Men’s Physique over 175 cm", 'Mr. Denim Open' ] },
+  { overall: 'ladies-bb', side: 'ladies', name: 'Ladies Bodybuilding & Figure', lineups: [
+    'Ladies Figure Open', 'Ladies Figure 40+', 'Ladies Bodybuilding Open' ] },
+  { overall: 'ladies-bikini', side: 'ladies', name: 'Bikini & Wellness', lineups: [
+    'Ladies Bikini 21 and under', 'Ladies Bikini 40+', 'Ladies Bikini up to 171 cm', 'Ladies Bikini over 171 cm',
+    'Ladies Fitness Bikini up to 171 cm', 'Ladies Fitness Bikini over 171 cm',
+    'Ladies Wellness Open', 'Ladies Sports Model Open' ] }
 ]);
 
 export const COSTS = [
@@ -74,21 +76,19 @@ export const DATES = [
   { when: TBC('Day before the show'), time: EVENT.regTime, what: 'Registration',
     detail: 'At the venue. No late registration on show day under any circumstances.' },
   { when: TBC('Show day'), time: TBC('09h00'), what: 'Compulsory athlete meeting',
-    detail: 'Backstage. The #shayebestclassicloading trophy and R2 000 is awarded here.' },
+    detail: 'Backstage. The #shayebestclassicloading trophy and R1 000 is awarded here.' },
   { when: TBC('Show day'), time: TBC('09h00'), what: 'Doors open to the public', detail: '' },
   { when: TBC('Show day'), time: TBC('10h00'), what: 'Show starts', detail: '' }
 ];
 
 export const PARTNERS = [
-  { name: 'Tanworx', role: 'Tanning, hair and makeup', contact: 'Ina · 072 604 5821',
+  // Tanning company not confirmed for 2027 (Troy, 2026-09-29): name, contact and rules withheld until it is.
+  // The 2026 company's terms are in git history (eb7e5d7).
+  { name: 'Tanning company', tbc: true, role: 'Tanning, hair and makeup',
     items: [ ['Stage-ready tan', TBC('R600')], ['Makeup (stage glam with lashes)', TBC('R700')],
              ['Hair (straightened / curled / high ponytail / braid)', TBC('R350')],
              ['Full combo: makeup + hair + tan', TBC('R1 550')] ],
-    rules: [ 'The ONLY accredited company on show day. No other company will be allowed at the venue.',
-             'Tan includes base tan, stage coat as needed, touch-ups for up to 2 line-ups plus overalls, and shine/glaze if required.',
-             f => `Athletes competing in more than 2 line-ups are charged ${f(TBC('R50'))} per additional line-up.`,
-             'Tanworx will not do any touch-ups or fixing of tans if not originally applied by Tanworx.',
-             'Booking is essential.' ] },
+    rules: [ 'Company, prices and rules to be confirmed. They will be shared in the athlete WhatsApp group.' ] },
   { name: 'Studio Audacity', role: 'Official event photography', contact: 'Jay · 076 968 0184',
     items: [ ['Early bird: book and pay before the event', TBC('R400')], ['Normal package', TBC('R500')] ],
     rules: [ 'All stage photographs in high-resolution digital format, for all divisions.',
@@ -100,9 +100,8 @@ export const PARTNERS = [
 export const SOCIAL_TROPHY = {
   hashtags: ['#shayebest', '#shayebestclassic', '#shayebestclassicloading'],
   tag: 'Tag shayebest on Facebook and Instagram, and shaye.best.classic on TikTok.',
-  prize: 'R2 000 and a unique #shayebestclassicloading trophy',
-  rule: 'Post as many times as you like. The post with the most likes across all social media wins, awarded by Shaye Best at the athlete meeting.',
-  winners: [ ['2023', 'Morne Smal'], ['2024', 'Jaco Jonker'], ['2025', 'Jaco Jonker'], ['2026', TBC('To be announced')] ]
+  prize: 'R1 000 and a unique #shayebestclassicloading trophy',
+  rule: 'Post as many times as you like. The post with the most likes across all social media wins, awarded by Shaye Best at the athlete meeting.'
 };
 
 // 2027 line-up confirmed by Shaye (Troy, 2026-09-26): Research Peptides (title),
@@ -168,17 +167,25 @@ export const FAQ = [
   { q: 'How do I enter?',
     a: () => 'Send a WhatsApp to 082 406 2121 to join the athlete group. Shaye sends the registration form there. Entries are not taken on this page.' },
   { q: 'Can I register on show day?',
-    a: f => `No. Registration is ${f(EVENT.regDate)}, ${f(EVENT.regTime)} only. There is no late registration on show day under any circumstances.` },
+    a: f => (isTbc(EVENT.regDate) || isTbc(EVENT.regTime)
+      ? 'No. The registration date and time are to be confirmed. There is no late registration on show day under any circumstances.'
+      : `No. Registration is ${f(EVENT.regDate)}, ${f(EVENT.regTime)} only. There is no late registration on show day under any circumstances.`) },
   { q: 'What does it cost to compete?',
-    a: f => `${f(COSTS[0].price)} for your first line-up and ${f(COSTS[1].price)} for each additional line-up.` },
+    a: f => (isTbc(COSTS[0].price) || isTbc(COSTS[1].price)
+      ? 'Entry prices are to be confirmed. Message the athlete WhatsApp group for updates.'
+      : `${f(COSTS[0].price)} for your first line-up and ${f(COSTS[1].price)} for each additional line-up.`) },
   { q: 'How much is it to watch?',
-    a: f => `${f(COSTS[2].price)} at the door, all ages. A backstage and show combo is ${f(COSTS[3].price)}, with limited passes.` },
+    a: f => (isTbc(COSTS[2].price) || isTbc(COSTS[3].price)
+      ? 'Door prices are to be confirmed. Door entry is open to all ages, and a backstage and show combo will have limited passes.'
+      : `${f(COSTS[2].price)} at the door, all ages. A backstage and show combo is ${f(COSTS[3].price)}, with limited passes.`) },
   { q: 'Can I use my own tanning company?',
-    a: () => 'No. Tanworx is the only accredited company on show day and no other company is allowed at the venue. Tanworx will not fix or touch up a tan they did not apply.' },
+    a: () => 'The tanning company for 2027 is to be confirmed. Shaye shares it in the athlete WhatsApp group.' },
   { q: 'How do I know if I qualify for Classic Physique?',
     a: () => 'Use the calculator on this page. Enter your height and it gives your maximum stage weight from the 2027 table.' },
   { q: 'When do I get my photos?',
-    a: f => `Minimum two weeks after the event, sent via WeTransfer by Studio Audacity. ${f(PARTNERS[1].items[0][1])} if you book and pay before the event, ${f(PARTNERS[1].items[1][1])} after.` },
+    a: f => 'Minimum two weeks after the event, sent via WeTransfer by Studio Audacity. ' + (isTbc(PARTNERS[1].items[0][1]) || isTbc(PARTNERS[1].items[1][1])
+      ? 'Photo package prices are to be confirmed.'
+      : `${f(PARTNERS[1].items[0][1])} if you book and pay before the event, ${f(PARTNERS[1].items[1][1])} after.`) },
   { q: 'Is there a prize for every line-up winner?',
     a: () => 'Line-up winners receive a trophy, 2nd and 3rd receive medals, and 4th to 6th receive a unique participation medal. The cash prizes are for the five overall titles.' }
 ];

@@ -1,5 +1,5 @@
 import { EVENT, FAQ, DIVISION_GROUPS, DATES, COSTS, PARTNERS, SOCIAL_TROPHY, SPONSORS,
-         HIGHLIGHT_CLIPS, HIGHLIGHT_PHOTOS, SHAYE, PREVIEW, CLASSIC_TABLE } from './data.js';
+         HIGHLIGHT_CLIPS, HIGHLIGHT_PHOTOS, SHAYE, PREVIEW, CLASSIC_TABLE, OVERALLS } from './data.js';
 import { isTbc, val } from './tbc.js';
 import { maxWeight, band } from './calc.js';
 
@@ -42,11 +42,14 @@ export function renderClimb() {
   if (isTbc(DIVISION_GROUPS)) {
     document.getElementById('c-label').innerHTML = `Divisions · 2027 <span class="tbc-chip" title="Divisions to be confirmed">TBC</span>`;
   }
-  document.getElementById('c-rail').innerHTML = groups.map((g, i) => `
+  const SIDES = { men: 'Men’s divisions', ladies: 'Ladies’ divisions' };
+  let last;
+  document.getElementById('c-rail').innerHTML = groups.map((g, i) => `${g.side !== last && (last = g.side) ? `<p class="c-side">${SIDES[g.side]}</p>` : ''}
     <article class="ledge" style="--i:${i}">
       <p class="label">Ledge ${i + 1}${g.note ? ` · ${g.note}` : ''}</p>
       <h3 class="cond">${g.name}</h3>
       <ul>${g.lineups.map(l => `<li>${l}</li>`).join('')}</ul>
+      <p class="ledge-overall"><span>Overall</span> ${OVERALLS.find(o => o.key === g.overall).feeds} stand against each other.</p>
     </article>`).join('');
 }
 // renderSummit lives in summit.js now — it shares the beat sequence (BEATS)
@@ -96,6 +99,7 @@ export function renderHighlights() {
       p.setAttribute('poster', b.dataset.poster || '');
       p.setAttribute('accent-color', '#FF7A18');
       p.setAttribute('metadata-video-title', b.getAttribute('aria-label'));
+      p.setAttribute('disable-cookies', ''); p.setAttribute('disable-tracking', ''); // no muxData cookie, nothing sent to Mux Data
       p.setAttribute('autoplay', ''); // a play() here is aborted by the stream load the element starts on connect
       p.setAttribute('default-hidden-captions', ''); // Mux auto-captions misspell Shaye; off until a corrected track is up (CC still offers them)
       vid.hidden = true; vid.after(p); dlg.showModal();
@@ -126,9 +130,9 @@ export function renderCosts() {
 export function renderPartners() {
   document.getElementById('partner-grid').innerHTML = PARTNERS.map(p => `
     <article class="partner">
-      <h3>${p.name}</h3>
+      <h3>${p.name}${p.tbc ? ' <span class="tbc-chip">TBC</span>' : ''}</h3>
       <div class="role">${p.role}</div>
-      <div class="contact">${p.contact}</div>
+      ${p.contact ? `<div class="contact">${p.contact}</div>` : ''}
       <table>${p.items.map(([n, v]) => `<tr><td>${n}</td><td>${tbc(v)}</td></tr>`).join('')}</table>
       <ul>${p.rules.map(r => `<li>${typeof r === 'function' ? r(tbc) : r}</li>`).join('')}</ul>
     </article>`).join('');
@@ -155,9 +159,6 @@ export function renderSocial() {
       <p>${s.tag}</p>
       <div class="soc-row">${icons}</div>
       <p style="margin-top:1rem;color:var(--ember)">Prize: ${s.prize}.</p>
-    </div>
-    <div><p class="label">Past winners</p>
-      <ul class="winners">${s.winners.map(([y, n]) => `<li><b>${y}</b><span>${tbc(n)}</span></li>`).join('')}</ul>
     </div>`;
 }
 
@@ -190,8 +191,8 @@ export function renderSponsors() {
 }
 
 export function renderVenue() {
-  document.getElementById('venue-label').innerHTML = isTbc(EVENT.venue) ? 'Cape Town · venue <span class="tbc-chip">TBC</span>' : 'Cape Town';
   if (isTbc(EVENT.gps)) {                      // no address, map or directions until the venue is confirmed
+    document.getElementById('venue-label').textContent = 'Cape Town';  // the block below already says "Venue TBC"
     document.getElementById('venue-grid').innerHTML = `
     <div>
       <p class="addr">Venue ${tbc(EVENT.venue)}</p>
@@ -229,6 +230,6 @@ export function renderCloser() {
     <div><a href="tel:+27824062121">${EVENT.phone}</a> · <a href="mailto:${EVENT.email}">${EVENT.email}</a>
       · <a href="${EVENT.facebook}" target="_blank" rel="noopener">Facebook</a>
       · <a href="${EVENT.instagram}" target="_blank" rel="noopener">Instagram</a>
-      · <a href="about/">About Shaye</a> · <a href="2025/">2025</a></div>
+      · <a href="about/">About Shaye</a></div>
     <div class="credit">Site by <a href="https://thepocketlogic.com" target="_blank" rel="noopener">Pocket Logic</a></div>`;
 }
