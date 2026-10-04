@@ -1,4 +1,4 @@
-import { OVERALLS, EVENT } from './data.js';
+import { OVERALLS, EVENT, ZAR_NOTE } from './data.js';
 import { rand } from './render.js';
 import { startJudgingEmbers, burst } from './embers.js';
 
@@ -54,6 +54,7 @@ export function renderSummit() {
           <p class="label">Every overall, together</p>
           <p class="s-amt s-big cond" data-to="${EVENT.prizeTotal}">${rand(0)}</p>
           <p class="wide">In cash prizes · Fully loaded</p>
+          <p>${ZAR_NOTE}</p>
         </div>
       </article>`;
     }
@@ -63,6 +64,7 @@ export function renderSummit() {
         <p class="label">${b.title} overall${b.isNew ? '<br>New for 2027' : ''}</p>
         <p class="s-amt cond" data-to="${b.amount}">${rand(0)}</p>
         ${b.runnerUp ? `<p class="s-ru">Runner-up <b>${rand(b.runnerUp)}</b></p>` : ''}
+        <p>${ZAR_NOTE}</p>
       </div>
     </article>`;
   }).join('');

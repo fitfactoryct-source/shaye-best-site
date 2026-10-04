@@ -4,7 +4,7 @@ import { startEmbers } from './embers.js';
 import { forgeReveal } from './forge.js';
 import { initFlames } from './flames.js';
 import {
-  renderHero, renderClimb, renderShaye, renderHighlights, renderDates, renderCosts,
+  renderHero, renderClimb, renderShaye, renderPosing, renderHighlights, renderDates, renderCosts,
   initCalculator, renderPartners, renderSocial, renderSponsors, renderVenue, renderFaq, renderCloser
 } from './render.js';
 import { initSponsors, initReveals, initLoadBar, initMagnetic, initCloserVideo } from './motion.js';
@@ -24,7 +24,7 @@ document.documentElement.classList.toggle('reduced', reduced);
 gsap.registerPlugin(ScrollTrigger);
 
 // 1. Content first — motion measures against real layout.
-renderHero(); renderClimb(); renderSummit(); renderShaye(); renderHighlights(); initLightbox();
+renderHero(); renderClimb(); renderSummit(); renderShaye(); renderPosing(); renderHighlights(); initLightbox();
 renderDates(); renderCosts(); renderPartners(); renderSocial(); renderSponsors();
 renderVenue(); renderFaq(); renderCloser();
 initCalculator();

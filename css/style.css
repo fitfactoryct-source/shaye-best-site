@@ -75,6 +75,10 @@ html.reduced .fire-loop{display:none}
 .tbc-chip{display:inline-block;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 100,'wght' 700;
   font-size:var(--label-s);letter-spacing:.22em;text-transform:uppercase;color:var(--blaze);
   border:1px solid rgba(255,194,74,.55);padding:.15rem .4rem;border-radius:2px;vertical-align:middle;line-height:1}
+/* Cash-prize currency note: solid blaze so it reads as the one thing to notice */
+.zar-note{display:inline-block;margin-top:.6rem;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 100,'wght' 800;
+  font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--void);background:var(--blaze);
+  padding:.3rem .55rem;border-radius:2px;line-height:1.1}
 /* Loading bar motif */
 .load-bar{position:relative;height:6px;background:rgba(255,255,255,.08);overflow:visible}
 .load-fill{position:absolute;inset:0;background:linear-gradient(90deg,var(--flame),var(--ember),var(--blaze));
@@ -380,6 +384,26 @@ html.reduced .ledge{transform:none;flex-basis:auto}
 .sh-link{color:var(--ember);text-decoration:none;font-variation-settings:'wdth' 100,'wght' 800;text-transform:uppercase;
   font-size:.875rem;letter-spacing:.16em}
 .sh-link:hover{color:var(--blaze)}
+/* Posing coaching: hero photo + price card, then the film, then a photo strip */
+#posing{border-top:1px solid var(--rule)}
+.posing-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:3rem;align-items:center}
+.posing-hero{display:block;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.posing-hero img{display:block;width:100%;height:auto}
+.posing-copy .label{color:var(--ember)}
+.posing-pitch{margin-top:.75rem;max-width:52ch;line-height:1.6;color:#CFC4BF}
+.posing-card{display:flex;justify-content:space-between;align-items:center;gap:1rem;border:1px solid var(--rule);padding:1.25rem 1.5rem;margin:1.75rem 0}
+.posing-card .l{font-family:'Anton',sans-serif;font-size:1.5rem;text-transform:uppercase}
+.posing-card .nt{margin-top:.25rem;color:#CFC4BF;font-size:.875rem}
+.posing-card .p{font-size:clamp(2.5rem,6vw,3.5rem);line-height:1;color:var(--ember);font-variant-numeric:tabular-nums}
+.posing-strip{display:grid;grid-template-columns:1.5fr 1.5fr 1fr 1.5fr 1fr;gap:1rem;margin-top:2.5rem}
+.posing-strip a{display:block;overflow:hidden}
+.posing-strip img{display:block;width:100%;height:260px;object-fit:cover;transition:transform .4s ease}
+.posing-strip a:hover img{transform:scale(1.03)}
+@media (max-width:640px){
+  .posing-strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.75rem}
+  .posing-strip a{flex:0 0 auto;scroll-snap-align:start}
+  .posing-strip img{height:200px;width:auto}
+}
 .bio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:3rem;align-items:center;margin-bottom:4rem}
 .bio-role{margin-top:.75rem;color:var(--ember);font-size:.875rem;letter-spacing:.06em;max-width:40ch}
 .bio-copy{max-width:70ch}

@@ -25,6 +25,7 @@ const WAYPOINTS = [
   { id: 'climb', label: 'The climb' },
   { id: 'summit', label: 'The summit' },
   { id: 'shaye', label: 'Shaye Best' },
+  { id: 'posing', label: 'Posing' },
   { id: 'highlights', label: 'Highlights' },
   { id: 'dates', label: 'Key info' },
   { id: 'closer', label: 'Join up' }
