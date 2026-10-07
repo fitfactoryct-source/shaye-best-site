@@ -159,25 +159,6 @@ export const HIGHLIGHT_PHOTOS = [
 // Short clips for the highlights strip: { poster, src, title }. Empty until footage arrives.
 export const HIGHLIGHT_CLIPS = [];
 
-// Shaye's own 1 on 1 posing coaching (price from his LBN price list, 2026-10-04).
-// Photos: assets/posing/<name>.webp full size, <name>-sm.webp thumbnail. Originals in assets-src/posing/.
-export const POSING = {
-  price: 'R500',
-  length: '60 minutes',
-  what: 'Posing coaching, one on one',
-  pitch: 'Shaye coaches you in person, one athlete at a time. He adjusts your poses by hand, so you know exactly what the judges see before you step on stage.',
-  whatsapp: 'https://wa.me/27824062121?text=' + encodeURIComponent("Hi Shaye, I'd like to book a 1 on 1 posing session."),
-  hero: { src: 'assets/posing/hero.webp', w: 1284, h: 798, alt: 'Shaye Best adjusting an athlete’s pose by hand' },
-  video: { src: 'assets/posing/coaching.mp4', poster: 'assets/posing/coaching-poster.webp', length: '1:08' },
-  photos: [
-    { name: 'kneel-mirror',   alt: 'Shaye Best kneeling to demonstrate a biceps pose' },
-    { name: 'back-pose',      alt: 'Shaye Best watching an athlete’s back pose' },
-    { name: 'kneel-portrait', alt: 'Shaye Best and an athlete mirroring a pose' },
-    { name: 'group',          alt: 'Shaye Best coaching three athletes in a group session' },
-    { name: 'ladies',         alt: 'Shaye Best guiding a female athlete’s arm position' }
-  ]
-};
-
 export const SHAYE = {
   vision: 'Driving excellence, absolute integrity, and freedom in physique sports.',
   portrait: 'assets/shaye-portrait.webp'
@@ -208,8 +189,6 @@ export const FAQ = [
     a: f => 'Minimum two weeks after the event, sent via WeTransfer by Studio Audacity. ' + (isTbc(PARTNERS[1].items[0][1]) || isTbc(PARTNERS[1].items[1][1])
       ? 'Photo package prices are to be confirmed.'
       : `${f(PARTNERS[1].items[0][1])} if you book and pay before the event, ${f(PARTNERS[1].items[1][1])} after.`) },
-  { q: 'Does Shaye offer posing coaching?',
-    a: () => `Yes. One on one posing coaching with Shaye is ${POSING.price} for ${POSING.length}. Message the athlete WhatsApp group number, 082 406 2121, to book a session.` },
   { q: 'Is there a prize for every line-up winner?',
     a: () => 'Line-up winners receive a trophy, 2nd and 3rd receive medals, and 4th to 6th receive a unique participation medal. The cash prizes are for the five overall titles. ' + ZAR_NOTE }
 ];

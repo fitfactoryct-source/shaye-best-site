@@ -1,5 +1,5 @@
 import { EVENT, FAQ, DIVISION_GROUPS, DATES, COSTS, PARTNERS, SOCIAL_TROPHY, SPONSORS,
-         HIGHLIGHT_CLIPS, HIGHLIGHT_PHOTOS, SHAYE, PREVIEW, CLASSIC_TABLE, OVERALLS, ZAR_NOTE, POSING } from './data.js';
+         HIGHLIGHT_CLIPS, HIGHLIGHT_PHOTOS, SHAYE, PREVIEW, CLASSIC_TABLE, OVERALLS, ZAR_NOTE } from './data.js';
 import { isTbc, val } from './tbc.js';
 import { maxWeight, band } from './calc.js';
 
@@ -67,31 +67,6 @@ export function renderShaye() {
     </div>`;
 }
 
-
-// Photos open in the shared lightbox (a[data-lightbox]); the film plays in the clip dialog via .w-frame[data-src].
-export function renderPosing() {
-  const p = POSING;
-  document.getElementById('posing-body').innerHTML = `
-    <div class="posing-top">
-      <a class="posing-hero" href="${p.hero.src}" data-lightbox>
-        <img src="${p.hero.src}" width="${p.hero.w}" height="${p.hero.h}" alt="${p.hero.alt}" loading="lazy"></a>
-      <div class="posing-copy">
-        <p class="label">${p.what}</p>
-        <p class="posing-pitch">${p.pitch}</p>
-        <div class="posing-card"><div><div class="l">${p.length}</div><div class="nt">One athlete, one coach</div></div>
-          <div class="p cond">${p.price}</div></div>
-        <a class="cta" href="${p.whatsapp}">Book on WhatsApp →</a>
-      </div>
-    </div>
-    <button class="w-frame" data-src="${p.video.src}" data-poster="${p.video.poster}" aria-label="Play the posing coaching film, ${p.video.length}">
-      <img src="${p.video.poster}" alt="" width="1280" height="720" loading="lazy">
-      <span class="w-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></span>
-      <span class="w-meta" aria-hidden="true"><span>Coaching in the studio</span><span>${p.video.length}</span></span>
-    </button>
-    <div class="posing-strip">${p.photos.map(f => `
-      <a href="assets/posing/${f.name}.webp" data-lightbox><img src="assets/posing/${f.name}-sm.webp" alt="${f.alt}" loading="lazy"></a>`).join('')}
-    </div>`;
-}
 
 export function renderHighlights() {
   const photos = HIGHLIGHT_PHOTOS.map(src => `<a href="${src.replace('/2026/', '/2026/lg/')}" data-lightbox><img src="${src}" width="560" height="700" alt="2026 Shaye Best Classic winner on stage" loading="lazy"></a>`);
