@@ -1,4 +1,4 @@
-import { EVENT, FAQ, DIVISION_GROUPS, DATES, COSTS, PARTNERS, SOCIAL_TROPHY, SPONSORS,
+import { EVENT, FAQ, DIVISION_GROUPS, PARTNERS, SOCIAL_TROPHY, SPONSORS,
          HIGHLIGHT_CLIPS, HIGHLIGHT_PHOTOS, SHAYE, PREVIEW, CLASSIC_TABLE, OVERALLS, ZAR_NOTE } from './data.js';
 import { isTbc, val } from './tbc.js';
 import { maxWeight, band } from './calc.js';
@@ -114,18 +114,7 @@ export function renderHighlights() {
   });
 }
 
-export function renderDates() {
-  document.getElementById('timeline').innerHTML = DATES.map(d => `
-    <li><div class="w">${d.what}</div>
-      <div class="tm">${isTbc(d.when) && isTbc(d.time) ? tbc(d.when) : `${tbc(d.when)} · ${tbc(d.time)}`}</div>
-      ${d.detail ? `<p class="d">${d.detail}</p>` : ''}</li>`).join('');
-}
-
-export function renderCosts() {
-  document.getElementById('cost-grid').innerHTML = COSTS.map(c => `
-    <div class="cost"><div class="p">${tbc(c.price)}</div>
-      <div class="l">${c.label}</div><div class="nt">${c.note}</div></div>`).join('');
-}
+// Dates and costs render in info.js (the competition info section).
 
 export function renderPartners() {
   document.getElementById('partner-grid').innerHTML = PARTNERS.map(p => `

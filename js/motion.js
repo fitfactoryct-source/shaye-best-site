@@ -2,7 +2,7 @@
 // child of a grid/list fades up once as it enters.
 export function initReveals(reduced) {
   if (reduced) return;
-  const els = gsap.utils.toArray('.sec-head, .timeline li, .cost, .partner, .faq-list details, .social-body > div');
+  const els = gsap.utils.toArray('.sec-head, .partner, .faq-list details, .social-body > div');
   gsap.set(els, { opacity: 0, y: 18 });
   ScrollTrigger.batch(els, { start: 'top 92%',
     onEnter: b => gsap.to(b, { opacity: 1, y: 0, stagger: .05, duration: .5, ease: 'power2.out', overwrite: true }) });

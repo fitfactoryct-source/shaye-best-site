@@ -4,9 +4,10 @@ import { startEmbers } from './embers.js';
 import { forgeReveal } from './forge.js';
 import { initFlames } from './flames.js';
 import {
-  renderHero, renderClimb, renderShaye, renderHighlights, renderDates, renderCosts,
+  renderHero, renderClimb, renderShaye, renderHighlights,
   initCalculator, renderPartners, renderSocial, renderSponsors, renderVenue, renderFaq, renderCloser
 } from './render.js';
+import { renderInfo, initInfo } from './info.js';
 import { initSponsors, initReveals, initLoadBar, initMagnetic, initCloserVideo } from './motion.js';
 import { initGathering } from './gathering.js';
 import { initClimb } from './climb.js';
@@ -25,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // 1. Content first — motion measures against real layout.
 renderHero(); renderClimb(); renderSummit(); renderShaye(); renderHighlights(); initLightbox();
-renderDates(); renderCosts(); renderPartners(); renderSocial(); renderSponsors();
+renderInfo(); renderPartners(); renderSocial(); renderSponsors();
 renderVenue(); renderFaq(); renderCloser();
 initCalculator();
 initMagnetic('.cta', reduced);
@@ -43,6 +44,7 @@ initFlames(reduced);
 initGathering(reduced);
 initClimb(reduced);
 initSummit(reduced);
+initInfo(reduced);
 initReveals(reduced);
 initLoadBar(document.getElementById('soc-bar'), '#social', reduced);
 initSponsors(reduced);

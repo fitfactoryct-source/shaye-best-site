@@ -11,17 +11,18 @@ export const EVENT = {
   name: 'Shaye Best Classic 2027',
   year: 2027,
   presenter: { slug: 'research-peptides', name: 'Research Peptides', url: 'https://peptides.co.za' }, // confirmed for 2027 by Troy
-  showDate: null,                       // ISO string once confirmed; countdown mounts only when set
-  showDay: TBC('Date to be announced'),
-  doors: TBC('09h00'),
-  start: TBC('10h00'),
-  athleteMeeting: TBC('09h00, backstage, compulsory'),
-  regDate: TBC('The day before the show'),
-  regTime: TBC('15h00 – 20h00'),
+  // Date, times, venue and prices confirmed by Shaye via Troy, 2026-11-26.
+  showDate: '2027-08-21T10:00:00+02:00', // show start; the hero countdown runs to this
+  showDay: 'Sat 21 Aug',
+  doors: '09h00',
+  start: '10h00',
+  athleteMeeting: '09h00',               // Saturday, backstage, compulsory (Troy, 26 Nov)
+  regDate: 'Friday 20 August',
+  regTime: '15h00 – 20h00',
   regWarning: 'No late registration on show day under any circumstances',
-  venue: TBC('Corpus Christi Gemeente'),
-  address: TBC('Uys Krige Drive 78, Panorama, Cape Town'),
-  gps: TBC({ lat: -33.884920, lng: 18.577903 }),
+  venue: 'Corpus Christi Gemeente',
+  address: 'Uys Krige Drive 78, Panorama, Cape Town', // same venue as last year; street address and pin carried over
+  gps: { lat: -33.884920, lng: 18.577903 },
   prizeTotal: 190000,
   phone: '082 406 2121',
   whatsapp: 'https://wa.me/27824062121?text=' + encodeURIComponent(
@@ -68,20 +69,24 @@ export const DIVISION_GROUPS = TBC([
     'Ladies Wellness Open', 'Ladies Sports Model Open' ] }
 ]);
 
+// The competition info section splits these into two paths. Order matters:
+// the FAQ reads COSTS[0..3] by index. Labels are Shaye's own words.
 export const COSTS = [
-  { label: 'First line-up',          price: TBC('R500'), note: 'Per athlete' },
-  { label: 'Additional line-up',     price: TBC('R350'), note: 'Each' },
-  { label: 'Spectator door entry',   price: TBC('R200'), note: 'All ages' },
-  { label: 'Backstage & show combo', price: TBC('R700'), note: 'Limited passes: main hall and backstage' }
+  { label: 'First line-up',           price: 'R600', path: 'athletes' },
+  { label: 'Each additional line-up', price: 'R400', path: 'athletes' },
+  { label: 'Door charge',             price: 'R200', note: 'All ages', path: 'spectators' },  // same price regardless of age (Troy, 26 Nov)
+  { label: 'Backstage / show combo',  price: 'R800', note: 'Backstage and main event', path: 'spectators' }
 ];
 
+export const DAYS = { fri: EVENT.regDate, sat: 'Saturday 21 August' };
+
 export const DATES = [
-  { when: TBC('Day before the show'), time: EVENT.regTime, what: 'Registration',
-    detail: 'At the venue. No late registration on show day under any circumstances.' },
-  { when: TBC('Show day'), time: TBC('09h00'), what: 'Compulsory athlete meeting',
-    detail: 'Backstage. The #shayebestclassicloading trophy and R1 000 is awarded here. ' + ZAR_NOTE },
-  { when: TBC('Show day'), time: TBC('09h00'), what: 'Doors open to the public', detail: '' },
-  { when: TBC('Show day'), time: TBC('10h00'), what: 'Show starts', detail: '' }
+  { day: 'fri', time: EVENT.regTime, what: 'Athlete registration', detail: 'No late entries accepted.',
+    paths: ['athletes'] },
+  { day: 'sat', time: EVENT.athleteMeeting, what: 'Compulsory athlete meeting',
+    detail: 'Backstage. The #shayebestclassicloading trophy and R1 000 is awarded here. ' + ZAR_NOTE, paths: ['athletes'] },
+  { day: 'sat', time: EVENT.doors, what: 'Doors open to the public', paths: ['spectators'] },
+  { day: 'sat', time: EVENT.start, what: 'Show starts', paths: ['athletes', 'spectators'] }
 ];
 
 export const PARTNERS = [
@@ -117,7 +122,7 @@ export const SPONSORS = [
   { slug: 'dermaporium',   name: 'Dermaporium',               tier: 'partner', confirmed: true, url: 'https://dermaporium.co.za' },
   { slug: 'refresche',     name: 'Refresche Teeth Whitening', tier: 'partner', confirmed: true },
   { slug: 'engen-rietvlei',name: 'Engen Rietvlei',            tier: 'partner', confirmed: true },
-  { slug: 'planet-nails',  name: 'Planet Nails Distribution', tier: 'partner', confirmed: false },
+  { slug: 'planet-nails',  name: 'Planet Nails Distribution', tier: 'partner', confirmed: true, url: 'https://www.planetnails.co.za' },
   { slug: 'sorbet-hairbar',name: 'Sorbet hairbar',            tier: 'partner', confirmed: false },
   { slug: 'dryforce',      name: 'DryForce',                  tier: 'partner', confirmed: false },
   { slug: 'psygro',        name: 'Psygro',                    tier: 'partner', confirmed: false },

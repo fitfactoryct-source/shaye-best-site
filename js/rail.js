@@ -26,7 +26,7 @@ const WAYPOINTS = [
   { id: 'summit', label: 'The summit' },
   { id: 'shaye', label: 'Shaye Best' },
   { id: 'highlights', label: 'Highlights' },
-  { id: 'dates', label: 'Key info' },
+  { id: 'info', label: 'Competition info' },
   { id: 'closer', label: 'Join up' }
 ];
 
