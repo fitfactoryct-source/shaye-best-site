@@ -169,7 +169,7 @@ export function renderSponsors() {
          <img class="colour" src="assets/sponsors/${s.slug}-colour.png" alt="" aria-hidden="true" loading="lazy">${badge(s)}`;
     return s.url
       ? `<a class="sp${flag(s)}" href="${s.url}" target="_blank" rel="noopener" tabindex="${tab}">${imgs}</a>`
-      : `<div class="sp${flag(s)}" tabindex="${tab}">${imgs}</div>`;
+      : `<div class="sp${flag(s)}">${imgs}</div>`;   // not a link: nothing to focus
   };
   const partners = show.filter(s => s.tier !== 'title');
   const set = partners.map(s => tile(s, 0)).join('');

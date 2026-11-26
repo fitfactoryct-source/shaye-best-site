@@ -147,6 +147,7 @@ html.reduced .logo-hot{display:none}
 .ep-track{display:flex;gap:1rem;width:max-content;animation:ep-scroll 34s linear infinite}
 .ep-dup{display:contents}
 .ep-track:hover{animation-play-state:paused}
+.ep-track-wrap.kb .ep-track{animation:none}  /* keyboard focus inside: strip at rest (js/motion.js keyboardMarquee) */
 .ep-track img{height:280px;width:auto;border-radius:2px;box-shadow:0 12px 30px rgba(0,0,0,.5);opacity:0;transition:opacity .5s ease}
 @keyframes ep-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (max-width:640px){.ep-track img{height:180px}}
@@ -412,6 +413,17 @@ html.reduced .ledge{transform:none;flex-basis:auto}
 /* Clears the fixed #rail (28px desktop, 22px phone + safe area) with its label. */
 #s-bar{position:absolute;left:var(--pad);right:var(--pad);bottom:calc(4rem + env(safe-area-inset-bottom,0px));z-index:6}
 #s-bar .load-label{right:auto;left:0}
+/* Reduced motion / data saver: no pin, every prize as a list, the finale as a closing card.
+   Beat photos stay unloaded (display:none on a lazy img) except the finale's. */
+#summit.s-static{height:auto;overflow:visible}
+.s-static .s-stage{position:relative;inset:auto}
+.s-static .s-beats{position:relative;inset:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));
+  gap:2.5rem var(--pad);padding:var(--section-y) var(--pad) 7rem}  /* bottom clears #s-bar (4rem up) */
+.s-static .s-beat{position:relative;inset:auto;opacity:1}
+.s-static .s-beat-copy{position:relative;left:auto;top:auto;transform:none;max-width:none}
+.s-static .s-beat:not(.s-beat-finale) :is(.s-beat-photo,.s-beat-copy>p:last-child),
+.s-static .s-beat:not(.s-beat-finale)::after,.s-static :is(.s-a,.s-glow,.s-canvas){display:none}
+.s-static .s-beat-finale{grid-column:1/-1;min-height:70svh;display:grid;align-items:center;padding:var(--pad)}
 @media (max-width:820px){
   .s-a{opacity:.4}
   .s-beat-photo{object-position:50% 18%}

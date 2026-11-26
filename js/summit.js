@@ -62,7 +62,7 @@ export function renderSummit() {
       <img class="s-beat-photo" src="${b.photo}" alt="The ${b.title} champion, face in shadow" loading="lazy">
       <div class="s-beat-copy">
         <p class="label">${b.title} overall${b.isNew ? '<br>New for 2027' : ''}</p>
-        <p class="s-amt cond" data-to="${b.amount}">${rand(0)}</p>
+        <p class="s-amt cond" data-to="${b.amount}">${rand(i === 0 ? b.amount : 0)}</p>
         ${b.runnerUp ? `<p class="s-ru">Runner-up <b>${rand(b.runnerUp)}</b></p>` : ''}
         <p>${ZAR_NOTE}</p>
       </div>
@@ -88,10 +88,8 @@ export function initSummit(reduced) {
     if (amt) amt.textContent = rand(+amt.dataset.to);
   });
 
-  if (reduced || navigator.connection?.saveData) { // static: finale visible, every amount final
-    gsap.set(beats, { opacity: 0 });
-    gsap.set(beats[beats.length - 1], { opacity: 1 });
-    gsap.set(glows, { opacity: 0 });
+  if (reduced || navigator.connection?.saveData) { // static: every prize as a list (css .s-static), amounts final
+    sec.classList.add('s-static');
     gsap.set(fill, { scaleX: 1 });
     paintFinal();
     return;
@@ -139,7 +137,7 @@ export function initSummit(reduced) {
       if (b.isFinale) tl.to(glows, { opacity: .55, duration: .4 }, i + .1); // every throne together, one last time
 
       const amtEl = el.querySelector('.s-amt');
-      if (amtEl) {
+      if (amtEl && i > 0) {                 // beat 0 is on screen before the pin starts, so it shows its final amount
         const target = +amtEl.dataset.to;
         const o = { v: 0 };
         tl.to(o, { v: target, duration: .55, ease: 'power2.out',

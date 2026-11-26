@@ -8,7 +8,7 @@ import {
   initCalculator, renderPartners, renderSocial, renderSponsors, renderVenue, renderFaq, renderCloser
 } from './render.js';
 import { renderInfo, initInfo } from './info.js';
-import { initSponsors, initReveals, initLoadBar, initMagnetic, initCloserVideo } from './motion.js';
+import { initSponsors, initReveals, initLoadBar, initMagnetic, initCloserVideo, keyboardMarquee } from './motion.js';
 import { initGathering } from './gathering.js';
 import { initClimb } from './climb.js';
 import { initSummit, renderSummit } from './summit.js';
@@ -48,6 +48,8 @@ initInfo(reduced);
 initReveals(reduced);
 initLoadBar(document.getElementById('soc-bar'), '#social', reduced);
 initSponsors(reduced);
+const epWrap = document.querySelector('.ep-track-wrap');   // photo strip: CSS marquee, .kb stops it
+keyboardMarquee(epWrap, () => epWrap.classList.add('kb'), () => epWrap.classList.remove('kb'));
 initCloserVideo(reduced);
 initRail(reduced);
 if (!reduced) startEmbers(document.getElementById('embers'));

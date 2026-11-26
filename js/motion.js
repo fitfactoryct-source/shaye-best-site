@@ -41,6 +41,25 @@ export function initSponsors(reduced) {
   track.addEventListener('mouseleave', play);
   track.addEventListener('focusin', pause);
   track.addEventListener('focusout', play);
+  keyboardMarquee(track.parentElement, () => loop.pause().progress(0), play);
+}
+
+// Keyboard focus inside a moving strip can land on an item scrolled off-screen.
+// On keyboard focus (:focus-visible, so a mouse click or tap never makes the strip
+// jump) stop the motion, put the strip back at its start and scroll the focused
+// item into view inside the strip; restart once focus leaves the strip.
+export function keyboardMarquee(wrap, stop, start) {
+  if (!wrap) return;
+  wrap.addEventListener('focusin', e => {
+    if (!e.target.matches(':focus-visible')) return;
+    stop();
+    e.target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  });
+  wrap.addEventListener('focusout', e => {
+    if (wrap.contains(e.relatedTarget)) return;
+    wrap.scrollLeft = 0;
+    start();
+  });
 }
 
 // Pointer pull for the main CTAs. Within `radius` px of the element's centre

@@ -22,6 +22,7 @@ export const EVENT = {
   regWarning: 'No late registration on show day under any circumstances',
   venue: 'Corpus Christi Gemeente',
   address: 'Uys Krige Drive 78, Panorama, Cape Town', // same venue as last year; street address and pin carried over
+  postcode: '7500',                      // OpenStreetMap reverse lookup of the gps pin (26 Nov)
   gps: { lat: -33.884920, lng: 18.577903 },
   prizeTotal: 190000,
   phone: '082 406 2121',
@@ -107,7 +108,7 @@ export const PARTNERS = [
 
 export const SOCIAL_TROPHY = {
   hashtags: ['#shayebest', '#shayebestclassic', '#shayebestclassicloading'],
-  tag: 'Tag shayebest on Facebook and Instagram, and shaye.best.classic on TikTok.',
+  tag: 'Tag shaye_best on Instagram, shayebest on Facebook and shaye.best.classic on TikTok.', // Instagram handle: Troy, 26 Nov
   prize: 'R1 000 and a unique #shayebestclassicloading trophy',
   rule: 'Post as many times as you like. The post with the most likes across all social media wins, awarded by Shaye Best at the athlete meeting.'
 };
