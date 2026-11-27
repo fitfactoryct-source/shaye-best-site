@@ -121,7 +121,7 @@ export const SPONSORS = [
   { slug: 'browns',        name: 'Browns The Diamond Store',  tier: 'partner', confirmed: false },
   { slug: 'my-gym',        name: 'My Gym',                    tier: 'partner', confirmed: false },
   { slug: 'dermaporium',   name: 'Dermaporium',               tier: 'partner', confirmed: true, url: 'https://dermaporium.co.za' },
-  { slug: 'refresche',     name: 'Refresche Teeth Whitening', tier: 'partner', confirmed: true },
+  { slug: 'refresche',     name: 'Refresche Teeth Whitening', tier: 'partner', confirmed: true, v: 2 },  // v: new art under a year-long cache
   { slug: 'engen-rietvlei',name: 'Engen Rietvlei',            tier: 'partner', confirmed: true },
   { slug: 'planet-nails',  name: 'Planet Nails Distribution', tier: 'partner', confirmed: true, url: 'https://www.planetnails.co.za' },
   { slug: 'sorbet-hairbar',name: 'Sorbet hairbar',            tier: 'partner', confirmed: false },
@@ -174,7 +174,9 @@ export const SHAYE = {
 // prices/dates interpolate from the facts above and update when they flip.
 export const FAQ = [
   { q: 'How do I enter?',
-    a: () => 'Send a WhatsApp to 082 406 2121 to join the athlete group. Shaye sends the registration form there. Entries are not taken on this page.' },
+    a: () => 'Send a WhatsApp to 082 406 2121 to join the athlete group. The registration form is posted there two weeks before the show. Entries are not taken on this page.' },
+  { q: 'Where do I get the athlete registration form?',   // wording approved by Troy, 27 Nov
+    a: f => `It is posted on the athlete WhatsApp group two weeks before the show. Download it, print it, fill it in and bring it with you to athlete registration on ${f(EVENT.regDate)}, ${f(EVENT.regTime)}. To join the group, send a WhatsApp to 082 406 2121.` },
   { q: 'Can I register on show day?',
     a: f => (isTbc(EVENT.regDate) || isTbc(EVENT.regTime)
       ? 'No. The registration date and time are to be confirmed. There is no late registration on show day under any circumstances.'

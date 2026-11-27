@@ -259,6 +259,7 @@ html.reduced .fuse-spark{display:none}
 .sp{background:var(--void);min-height:150px;display:grid;place-items:center;padding:1.5rem;position:relative}
 .sp-track .sp{flex:0 0 190px;margin-right:1px}
 .sp img{max-height:64px;width:auto;transition:opacity .3s}
+.sp img[src*="/refresche"]{max-height:96px}      /* near-square stacked logo: 64px made the name unreadable */
 .sp .colour{position:absolute;opacity:0}
 .sp:hover .colour,.sp:focus-within .colour{opacity:1}
 .sp:hover .white,.sp:focus-within .white{opacity:0}

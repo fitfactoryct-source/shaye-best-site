@@ -165,8 +165,9 @@ export function renderSponsors() {
         <img src="assets/sponsors/${title.slug}.png" alt="${title.name}" loading="lazy"></a>${badge(title)}</div>` : '';
 
   const tile = (s, tab) => {
-    const imgs = `<img class="white"  src="assets/sponsors/${s.slug}.png" alt="${s.name}" loading="lazy">
-         <img class="colour" src="assets/sponsors/${s.slug}-colour.png" alt="" aria-hidden="true" loading="lazy">${badge(s)}`;
+    const v = s.v ? `?v=${s.v}` : '';
+    const imgs = `<img class="white"  src="assets/sponsors/${s.slug}.png${v}" alt="${s.name}" loading="lazy">
+         <img class="colour" src="assets/sponsors/${s.slug}-colour.png${v}" alt="" aria-hidden="true" loading="lazy">${badge(s)}`;
     return s.url
       ? `<a class="sp${flag(s)}" href="${s.url}" target="_blank" rel="noopener" tabindex="${tab}">${imgs}</a>`
       : `<div class="sp${flag(s)}">${imgs}</div>`;   // not a link: nothing to focus
